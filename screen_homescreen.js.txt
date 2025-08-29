@@ -1,0 +1,30 @@
+import React, { useEffect, useState } from "react";
+import { View, Text, Button } from "react-native";
+import { Audio } from "expo-av";
+
+export default function PlayerScreen({ route }) {
+  const { song } = route.params;
+  const [sound, setSound] = useState(null);
+
+  async function playSound() {
+    const { sound } = await Audio.Sound.createAsync({ uri: song.url });
+    setSound(sound);
+    await sound.playAsync();
+  }
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
+
+  return (
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text style={{ fontSize: 20, marginBottom: 20 }}>{song.title}</Text>
+      <Text style={{ fontSize: 16, marginBottom: 20 }}>{song.artist}</Text>
+      <Button title="Play Song" onPress={playSound} />
+    </View>
+  );
+}

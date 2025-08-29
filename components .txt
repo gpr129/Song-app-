@@ -1,0 +1,17 @@
+import React from "react";
+import { View, Text } from "react-native";
+
+export default function SongItem({ song }) {
+  return (
+    <View
+      style={{
+        padding: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: "#ccc"
+      }}
+    >
+      <Text style={{ fontSize: 18 }}>{song.title}</Text>
+      <Text style={{ color: "gray" }}>{song.artist}</Text>
+    </View>
+  );
+}
